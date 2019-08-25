@@ -1,0 +1,46 @@
+1. Create table student (id, name, m1, m2, m3, grade).Insert 5
+tuples into it. Find the total, calculate grade and update the grade
+in the table.
+
+create table stdnt(id int,sname varchar(15),m1 int,m2
+int,m3 int,gr char(1));
+
+insert into stdnt (id,sname,m1,m2,m3) values(88,'anu',39,67,92);
+insert into stdnt (id,sname,m1,m2,m3) values(10,'jan',58,61,29);
+insert into stdnt (id,sname,m1,m2,m3) values(30,'karuna',87,79,77);
+insert into stdnt (id,sname,m1,m2,m3) values(29,'jossy',39,80,45);
+
+
+CREATE OR REPLACE FUNCTION get_grade()
+   RETURNS void AS $$
+DECLARE 
+    total INT ;
+    grade char(1);
+    rec_film   RECORD;
+    cur_films CURSOR 
+       FOR SELECT * FROM stdnt;
+BEGIN
+   OPEN cur_films;
+   LOOP
+      FETCH cur_films INTO rec_film;
+      EXIT WHEN NOT FOUND;
+      total = rec_film.m1+rec_film.m2+rec_film.m3;
+      IF total>240 THEN
+         		grade='A';
+      ELSIF total>180 THEN
+		grade='B';
+      ELSIF total>120 THEN
+		grade='C';
+     ELSIF total>60 THEN
+		grade='D';
+    ELSE 
+	grade='F';
+      END IF;
+      update stdnt set gr=grade where m1=rec_film.m1;
+   END LOOP;
+   CLOSE cur_films;
+ 
+END; $$
+ 
+LANGUAGE plpgsql;
+

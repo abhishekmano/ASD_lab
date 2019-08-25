@@ -1,0 +1,18 @@
+6. Use an array to store the names, marks of 10 students in a class.
+Using Loop structures in PL/SQL insert the ten tuples to a table
+named stud
+
+create table stud(name varchar(10),mark int);
+
+CREATE or REPLACE FUNCTION insert_stud() RETURNS VOID as
+$$
+DECLARE
+data1 INT []= '{ 25,76,43,45,67,57,97,56,89,8 }';
+ data2  VARCHAR(20)[]='{ ARUN,AMAL,PETER,JOSE,ANNIE,MARY,JOSEPH,MARK,MIDHUN,KEVIN}';
+i INT ;
+BEGIN
+	FOR i IN 1..10 LOOP
+		INSERT INTO stud VALUES(data2[i],data1[i]);
+	END LOOP;
+END;
+$$ LANGUAGE plpgsql;

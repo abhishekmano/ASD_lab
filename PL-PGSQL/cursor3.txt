@@ -1,0 +1,42 @@
+3. Create table people_list (id, name, dt_joining, place).If person’s
+experience is above 10 years, put the tuple in table exp_list (id,
+name, experience).
+
+create table people_list(id INT, name varchar(20),dt_joining DATE,place varchar(20));
+ create table exp_list(id INT, name varchar(20),exp INT);
+
+
+insert into people_list values(101,'Robert','03-APR-2005','CHY');
+insert into people_list values(102,'Mathew','07-JUN-2008','CHY');
+insert into people_list values(103,'Luffy','15-APR-2003','FSN');
+insert into people_list values(104,'Lucci','13-AUG-2009','KTM');
+insert into people_list values(105,'Law','14-APR-2005','WTC');
+insert into people_list values(101,'Vivi','21-SEP-2010','ABA');
+
+
+
+CREATE OR REPLACE FUNCTION set_exp()
+   RETURNS void AS $$
+DECLARE 
+    exp INT;
+    proff   RECORD;
+    today DATE;
+    movproff CURSOR 
+       FOR SELECT * FROM people_list;
+BEGIN
+   OPEN movproff;
+   SELECT current_date INTO today;
+   LOOP
+      FETCH movproff INTO proff;
+      EXIT WHEN NOT FOUND;
+      
+      SELECT DATE_PART('year', today::date) - DATE_PART('year', proff.dt_joining::date) INTO exp;
+      IF exp>10 THEN
+      	INSERT INTO exp_list VALUES (proff.id,proff.name,exp);
+      END IF;
+   END LOOP;
+   CLOSE movproff;
+ 
+END; $$
+ 
+LANGUAGE plpgsql;

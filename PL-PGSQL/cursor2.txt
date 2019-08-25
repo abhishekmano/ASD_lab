@@ -1,0 +1,38 @@
+2. Create bank_details (accno, name, balance, adate).Calculate the
+interest of the amount and insert into a new table with fields
+(accno, interest). Interest= 0.08*balance.
+
+
+create table bankdetails(accno int,name varchar(15),balance int,adate date);
+
+insert into bankdetails values(1001,'aby',3005,'10-oct-15');
+insert into bankdetails values(1002,'alan',4000,'05-may-95');
+insert into bankdetails values(1003,'amal',5000,'16-mar-92');
+insert into bankdetails values(1004,'jeffin',3500,'01-apr-50');
+insert into bankdetails values(1005,'majo',6600,'01-jan-01');
+
+create table banknew(accno int,interest int);
+
+
+CREATE OR REPLACE FUNCTION get_interest()
+   RETURNS void AS $$
+DECLARE 
+    interest INT ;
+    account   RECORD;
+    movacc CURSOR 
+       FOR SELECT * FROM bankdetails;
+BEGIN
+   OPEN movacc;
+   LOOP
+      FETCH movacc INTO account;
+      EXIT WHEN NOT FOUND;
+      
+      interest=0.08*account.balance;
+      INSERT INTO banknew VALUES (account.accno,interest);
+   END LOOP;
+   CLOSE movacc;
+ 
+END; $$
+ 
+LANGUAGE plpgsql;
+

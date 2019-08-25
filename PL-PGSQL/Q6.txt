@@ -1,0 +1,23 @@
+7. Create a sequence using PL/SQL. Use this sequence to generate
+the primary key values for a table named class_cse with attributes
+roll,name and phone. Insert some tuples using PL/SQL programming.
+
+Create table class_cse (roll int primary key,name varchar(10),phone varchar(15));
+
+CREATE  SEQUENCE csekey
+START 101;
+
+CREATE or REPLACE FUNCTION class_cse() RETURNS VOID as
+$$
+DECLARE
+data1 VARCHAR []= '{ 0482-239091,0484-234562 ,0485-11234,0489-43617,0481-23145}';
+ data2  VARCHAR(20)[]='{ ARUN,AMAL,PETER,JOSE,ANNIE }';
+i INT ;
+j INT;
+BEGIN
+	FOR i IN 1..5 LOOP
+		INSERT INTO class_cse VALUES(nextval('csekey'),data2[i],data1[i]);
+	END LOOP;
+END;
+$$ LANGUAGE plpgsql;
+

@@ -1,0 +1,49 @@
+4  Create table employee_list(id,name,monthly salary). 
+If:
+annual salary<60000, increment monthly
+salary by 25%
+ between 60000 and
+200000, increment by 20%
+between 200000 and 500000, increment by 15%
+annual salary>500000, increment monthly salary by 10%
+
+create table emp_list(id INT,Name varchar(20),M_sal INT);
+
+insert into emp_list values(101,'Mathew',55000);
+insert into emp_list values(102,'Jose',80000);
+insert into emp_list values(103,'John',250000);
+insert into emp_list values(104,'Ann',600000);
+
+
+CREATE OR REPLACE FUNCTION sal_incre()
+   RETURNS void AS $$
+DECLARE 
+    yearsal INT;
+    monsal INT;
+    sal   RECORD;
+    movsal CURSOR 
+       FOR SELECT * FROM emp_list;
+BEGIN
+   OPEN movsal;
+   LOOP
+      FETCH movsal INTO sal;
+      EXIT WHEN NOT FOUND;
+      yearsal=sal.m_sal*12;
+      monsal=sal.m_sal;
+     
+      IF yearsal>500000 THEN
+      	UPDATE emp_list SET m_sal=monsal*1.1 WHERE m_sal=monsal;
+     ELSIF yearsal>200000 THEN
+	UPDATE emp_list SET m_sal=monsal*1.15 WHERE m_sal=monsal;	
+    ELSIF yearsal>60000 THEN
+	UPDATE emp_list SET m_sal=monsal*1.2WHERE m_sal=monsal;
+   ELSE
+	UPDATE emp_list SET m_sal=monsal*1.25 WHERE m_sal=monsal;		
+      END IF;
+   END LOOP;
+   CLOSE movsal;
+ 
+END; $$
+ 
+LANGUAGE plpgsql;
+
