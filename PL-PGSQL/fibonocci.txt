@@ -1,0 +1,19 @@
+CREATE or REPLACE FUNCTION fib(fib INT) RETURNS VOID as
+$$
+DECLARE
+value INT=1;
+new INT=1;
+temp INT;
+count INT;
+BEGIN
+RAISE NOTICE ' %', value;
+RAISE NOTICE ' %', new;
+FOR count in 3..fib LOOP
+temp=new;
+new=new+value;
+value=temp;
+RAISE NOTICE ' %', new;
+END LOOP;
+END;
+$$ LANGUAGE plpgsql;
+

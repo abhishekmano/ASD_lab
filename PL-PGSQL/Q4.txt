@@ -1,0 +1,20 @@
+ 5. Create table circle_area (rad,area). For radius 5,10,15,20 &25.,
+find the area and insert the corresponding values into the table by
+using loop structure in PL/SQL.
+
+CREATE or REPLACE FUNCTION create_circle() RETURNS VOID as
+$$
+DECLARE
+data1 INT =5;
+data2 REAL;
+count INT =5;
+i INT ;
+BEGIN
+	CREATE TABLE circle(rad INT ,area REAL);
+	FOR i IN 1..count LOOP
+		data2=3.1416*data1*data1;
+		INSERT INTO circle VALUES(data1,data2);
+		data1=data1+5;
+	END LOOP;
+END;
+$$ LANGUAGE plpgsql;

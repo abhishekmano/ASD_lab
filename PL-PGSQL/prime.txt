@@ -1,0 +1,26 @@
+CREATE or REPLACE FUNCTION prime(prime INT) RETURNS VOID as
+$$
+DECLARE
+	flag INT;
+	count INT =0;
+	i INT;
+	start INT=2;
+	rem INT;
+BEGIN
+	WHILE (count<prime) LOOP
+		flag =0;
+		FOR i IN 2..(start/2) LOOP
+			rem=start%i;
+			IF  rem = 0 THEN 
+				flag = 1;
+			END IF;
+		END LOOP;
+		IF flag = 0 THEN
+			RAISE NOTICE   ' % ' , start;
+			count=count+1;
+		END IF;
+		start=start +1;
+	END LOOP;
+END;
+$$ LANGUAGE plpgsql;
+
