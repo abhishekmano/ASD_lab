@@ -1,0 +1,11 @@
+CREATE TABLE customer_details (cust_id int UNIQUE,cust_name
+varchar(25),address varchar(30));
+
+
+CREATE TABLE emp_details(empid INT UNIQUE,empname varchar(20),salary
+int);
+
+
+CREATE TABLE cust_count(count_row int);
+
+insert into cust_count VALUES(0);

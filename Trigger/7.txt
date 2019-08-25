@@ -1,0 +1,23 @@
+7. Create a table with ebill(cname,prevreading,currreading). If
+prevreading = currreading then raise an exception ‘Data Entry
+Error’.
+
+CREATE TABLE ebill(cname varchar(20),preread int,curread int);
+
+CREATE OR REPLACE FUNCTION check_reading() RETURNS TRIGGER AS
+$checkread$
+BEGIN
+	IF NEW.preread=NEW.curread THEN
+RAISE EXCEPTION 'DATA ENTRY ERROR A % B %' ,NEW.preread,NEW.curread;
+	ELSE
+		RAISE NOTICE 'STATEMENT PROCESSED'  ;
+	END IF;
+	RETURN NEW;
+END;
+$checkread$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER check_reading 
+BEFORE INSERT ON ebill
+FOR EACH ROW EXECUTE PROCEDURE check_reading();
+

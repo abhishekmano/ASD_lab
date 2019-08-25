@@ -1,0 +1,15 @@
+1. Create a trigger whenever a new record is inserted in the
+customer_details table.
+
+CREATE OR REPLACE FUNCTION cust_det_insert() RETURNS TRIGGER AS 
+$cust_det_insert$
+    BEGIN
+    		RAISE NOTICE 'A row is inserted';
+		RETURN NEW;
+    END;
+$cust_det_insert$ 
+LANGUAGE plpgsql;
+CREATE TRIGGER cust_det_insert
+AFTER INSERT ON customer_details
+    FOR EACH STATEMENT EXECUTE PROCEDURE cust_det_insert();
+INSERT INTO customer_details VALUES(1,'John','Ezhaparambbil');

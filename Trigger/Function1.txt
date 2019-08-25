@@ -1,0 +1,15 @@
+1. Create a function factorial to find the factorial of a number. Use this function in a PL/SQL Program to  display the factorial of a number read from the user
+
+
+CREATE OR REPLACE FUNCTION fact(fact INT) RETURNS INT AS
+$$
+DECLARE
+count INT = 1;
+result INT = 1;
+BEGIN
+FOR count IN 1..fact LOOP
+result = result* count;
+END LOOP;
+RETURN result;
+END;
+$$ LANGUAGE plpgsql;

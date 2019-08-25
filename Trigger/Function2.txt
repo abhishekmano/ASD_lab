@@ -1,0 +1,18 @@
+2. Create a table student_details(roll int,marks int, phone int).
+Create a procedure pr1 toupdate all rows in the database. Boost
+the marks of all students by 5%.
+
+
+CREATE TABLE student_details(roll int,marks int, phone int);
+INSERT INTO student_details VALUES(1,70,9496947423);
+INSERT INTO student_details VALUES(2,85,9495941358);
+INSERT INTO student_details VALUES(3,78,8281865009);
+
+
+CREATE OR REPLACE PROCEDURE boost()
+LANGUAGE plpgsql    
+AS $$  
+BEGIN 
+UPDATE student_details SET marks=marks*1.05; 
+END;
+$$;

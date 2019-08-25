@@ -1,0 +1,23 @@
+4. Create a trigger to insert the deleted rows from
+emp_details to another table and updated rows to another
+table. ( Create the tables deleted and updatedT )
+
+
+ CREATE TABLE deleted(empid INT ,empname varchar(20),salary int);
+ CREATE TABLE updated(empid INT,empname varchar(20),salary int);
+
+
+CREATE OR REPLACE FUNCTION del_upd() RETURNS trigger AS $del_upd$
+BEGIN
+ 	IF (TG_OP = 'DELETE') THEN 
+			INSERT INTO deleted VALUES(OLD.empid,OLD.empname,OLD.salary);
+	ELSIF (TG_OP = 'UPDATE') THEN 
+	    	INSERT INTO updated VALUES(OLD.empid,OLD.empname,OLD.salary);
+	END IF;
+	RETURN NEW;                                                         
+END;
+$del_upd$ LANGUAGE plpgsql;
+
+CREATE TRIGGER del_upd
+AFTER UPDATE OR DELETE ON emp_details
+    FOR EACH ROW EXECUTE PROCEDURE del_upd();

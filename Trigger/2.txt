@@ -1,0 +1,13 @@
+2. Create a trigger to display a message when a user enters a value > 20000 in the salary  field of emp_details table.
+
+CREATE OR REPLACE FUNCTION emp_sal_check() RETURNS trigger AS $emp_sal$
+    BEGIN
+        IF NEW.salary >20000 THEN
+           RAISE NOTICE 'Employee % has salary greater than 20000 ',NEW.empname; 
+        END IF;
+        RETURN NEW;
+    END;
+$emp_sal$ LANGUAGE plpgsql;
+
+CREATE TRIGGER emp_sal AFTER INSERT OR UPDATE ON emp_details
+    FOR EACH ROW EXECUTE PROCEDURE emp_sal_check();

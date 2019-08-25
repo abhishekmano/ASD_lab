@@ -1,0 +1,20 @@
+3. Create a trigger w.r.tcustomer_detailstable.Increment the value of count_row (in cust_count table) whenever a new tuple is inserted and decrement the value of count_row when a tuple is deleted. Initial value of the count_row is set to 0.
+CREATE OR REPLACE FUNCTION cust_count() RETURNS trigger AS $cust_count$
+DECLARE 
+	count INT;
+BEGIN
+	SELECT * FROM cust_count INTO count;
+ 	IF (TG_OP = 'DELETE') THEN 
+		IF count !=0 THEN
+			UPDATE  cust_count SET count_row=count_row-1;
+		END IF; 
+	ELSIF (TG_OP = 'INSERT') THEN 
+		UPDATE  cust_count SET count_row=count_row+1;  	
+	END IF;
+	RETURN NEW;                                                         
+END;
+$cust_count$ LANGUAGE plpgsql;
+
+CREATE TRIGGER cust_count_change 
+AFTER INSERT OR DELETE ON customer_details
+    FOR EACH ROW EXECUTE PROCEDURE cust_count();

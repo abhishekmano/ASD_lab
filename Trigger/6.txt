@@ -1,0 +1,37 @@
+6. Write a PL/SQL to show no data found exception
+
+CREATE OR REPLACE FUNCTION checkpal(data varchar(10)) RETURNS VOID as
+$$
+DECLARE
+	result varchar(150);
+BEGIN
+	IF data ='' THEN
+		RAISE EXCEPTION  'NO DATA FOUND  ' ;
+	ELSE
+		SELECT REVERSE(data) INTO result;
+		IF result=data THEN
+			RAISE NOTICE  'PALINDROME';
+		ELSE
+			RAISE NOTICE  ' NOT A PALINDROME' ;
+		END IF;
+	END IF;
+END;
+$$
+LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION get_the_sal(id INT) RETURNS INT as
+$$
+DECLARE
+	result INT;
+BEGIN
+	SELECT salary INTO result FROM emp_details WHERE empid=id;
+	IF RESULT IS NULL THEN
+		RAISE EXCEPTION 'NO DATA FOUND' ;
+	ELSE 
+		RETURN result;
+	END IF;
+END;
+$$
+LANGUAGE plpgsql;
+

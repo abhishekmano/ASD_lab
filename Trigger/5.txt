@@ -1,0 +1,16 @@
+5. Write a PL/SQL to show divide by zero exception
+
+CREATE OR REPLACE FUNCTION div(a INT,b INT) RETURNS INT as
+$$
+DECLARE
+	result INT;
+BEGIN
+	IF b=0 THEN
+		RAISE EXCEPTION  'DVIDE BY ZERO  ' ;
+	ELSE
+		result=a/b;
+		RETURN result ;
+	END IF;
+END;
+$$
+LANGUAGE plpgsql;

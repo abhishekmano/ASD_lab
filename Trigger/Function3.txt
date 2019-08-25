@@ -1,0 +1,39 @@
+3. Create table student (id, name, m1, m2, m3, total,grade).Create a function f1 to calculate grade. Create aprocedure p1 to update the total and grade.
+
+CREATE TABLE studentmark(id int, name varchar(10), m1 int, m2 int, m3 int, total
+int, grade varchar(1) );
+
+CREATE OR REPLACE FUNCTION insert_stud(id INT ,name varchar(20),m1 INT, m2 INT, m3 INT)
+RETURNS VOID AS
+$$
+DECLARE
+	total INT;
+	grade CHAR;
+BEGIN
+	total=m1+m2+m3;
+	INSERT INTO studentmark VALUES(id,name,m1,m2,m3,total);
+	IF  total >=240 THEN
+		grade='A';
+	ELSIF total >=180 THEN
+		grade='B';
+	ELSIF total>=120 THEN
+		grade='C';
+	ELSIF  total>=60 THEN
+		grade = 'D' ;
+	ELSE
+		grade ='F';
+	END IF;
+	CALL insert_grade(id,grade);
+END;
+$$ 
+LANGUAGE plpgsql;
+
+
+
+CREATE OR REPLACE PROCEDURE insert_grade(sid INT ,sgrade CHAR)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+		UPDATE studentmark SET grade=sgrade WHERE id=sid; 
+END;
+$$;
