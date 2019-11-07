@@ -1,0 +1,9 @@
+Length() ,Length(field name/string) ,Gives the length of the string.
+Lower() ,Lower(field name/string,Gives the content in lowercase letters
+Upper() ,Upper(field name/string) , Gives the content in upper case letters
+Concat() ,"Concat (field name/string, field name/string)",Combines the first and second string .
+Lpad() ,"Lpad(field name/string,length,character)","Returns char1, left-padded to length n with the sequence of characters in char2"
+Rpad() ,"Rpad(field name/string,length,character)","Returns char1, right-padded to length n with char2"
+Rtrim() ,"Rtrim(field name/string,substring)","Returns char, with all the rightmost characters that appear in set removed"
+Instr() ,"Instr(field name/string,substring,n,m)",Searches char1 beginning with its nth character for the nth occurrence of char2 and returns the position of the character in char1 that is the first character of this occurrence.
+Substr() ,"Substr(field name/string,n,m)","Returns a portion of char, beginning at character m, n characters long."

@@ -1,0 +1,4 @@
+Constraint name, Column          ,Constraint
+Pk,branch_id      ,Primary key
+ Df ,branch_name    ,Default :’New Delhi’
+Fk , bankid ,Foreign key/References
